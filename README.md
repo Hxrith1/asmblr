@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ASMBLR
 
 **A low-level assembly-inspired toolkit for token creation on Solana.**
@@ -20,3 +21,7 @@ Find detailed guides, examples, and troubleshooting steps in the [docs](docs/) d
 
 ---
 Built with ❤️ by Assembly Tech
+=======
+# asmblr
+A low-level assembly-inspired toolkit for creating and deploying Solana tokens. Includes tools, examples, and documentation for hybrid assembly, C, and Rust workflows.
+>>>>>>> 8d30054bbb65b623e405888832488c474c3dd9bd
