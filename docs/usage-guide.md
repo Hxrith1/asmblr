@@ -58,3 +58,68 @@ Linux/MacOS: Install via your package manager:
 bash
 Copy code
 sudo apt-get install curl
+
+Compiling the Scripts
+1. Compile the Assembly Script
+If you're working with an .asm file, use NASM to compile it:
+
+       nasm -f elf64 myscript.asm -o myscript.o
+       ld myscript.o -o myscript
+
+2. Compile the C Script (signer.c)
+Use GCC to compile the signer.c file:
+
+       gcc -o signer signer.c -L. -lsolana_sdk_wrapper
+Make sure the compiled Rust DLL (solana_sdk_wrapper.dll) is in the same directory as signer.c.
+
+3. Compile the Rust Script (lib.rs)
+Navigate to the Rust script directory:
+
+       cd rust_project_directory
+Build the Rust script into a DLL:
+
+       cargo build --release --target x86_64-pc-windows-gnu
+After building, copy the solana_sdk_wrapper.dll from target/release into the directory with signer.c.
+
+
+Running the Scripts
+1. Running the Assembly Script
+If you have an executable from the assembly script, run it using:
+
+       ./myscript
+
+2. Running the C Script
+Once signer.c is compiled, run it:
+
+       ./signer
+
+3. Testing the Rust DLL Integration
+The signer.c script will dynamically load the solana_sdk_wrapper.dll to handle signing tasks. Ensure both are in the same directory before running signer.   
+
+
+Uploading Metadata and Submitting Transactions
+
+1. Uploading Metadata
+Use Curl to upload metadata to the Pump.fun IPFS API:
+
+curl -X POST https://pump.fun/api/ipfs \
+    -H "Content-Type: application/json" \
+    -d '{"name":"Terry","symbol":"Terry","description":"The first token to be deployed in assembly language.","twitter":"https://twitter.com/MyToken","telegram":"https://t.me/MyTokenGroup","website":"https://mytoken.io"}'
+
+2. Submitting Transactions
+Use Curl to submit signed transactions to the Helius RPC:
+
+curl -X POST https://rpc.helius.xyz/v1/your-api-key \
+       -H "Content-Type: application/json" \
+       -H "Authorization: your-api-key" \
+       -d '{
+              "jsonrpc": "2.0",
+               "id": 1,
+              "method": "sendTransaction",
+              "params": [
+              "<base58_encoded_signed_transaction>",
+              {"encoding": "base58"}
+              ]
+       }'
+
+    
