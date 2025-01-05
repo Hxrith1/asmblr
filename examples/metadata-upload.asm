@@ -1,5 +1,4 @@
 section .data
-    ; Token metadata strings
     debug_start db "Starting token metadata display...", 0xA, 0
     token_name db "Token Name: MyToken", 0xA, 0
     token_symbol db "Symbol: MTK", 0xA, 0
@@ -9,7 +8,7 @@ section .data
     token_website db "Website: https://mytoken.io", 0xA, 0
 
 section .bss
-    bytes_written resq 1  ; Reserve space for the number of bytes written
+    bytes_written resq 1  
 
 section .text
 extern GetStdHandle
@@ -17,13 +16,11 @@ extern WriteConsoleA
 global main
 
 main:
-    ; Get the handle for the standard output
-    sub rsp, 32              ; Align stack
-    mov rcx, -11             ; STD_OUTPUT_HANDLE constant
-    call GetStdHandle        ; Call GetStdHandle
-    mov rbx, rax             ; Save the handle in rbx
+    sub rsp, 32              
+    mov rcx, -11             
+    call GetStdHandle        
+    mov rbx, rax             
 
-    ; Print all metadata
     lea rdx, [rel debug_start]
     call print_string
 
@@ -45,30 +42,29 @@ main:
     lea rdx, [rel token_website]
     call print_string
 
-    ; Exit the program
-    xor rax, rax             ; Return 0
-    add rsp, 32              ; Restore stack
+    xor rax, rax             
+    add rsp, 32              
     ret
 
 print_string:
     ; Print the string to the console
-    mov rcx, rbx             ; Handle (stdout)
-    mov rdx, rdx             ; Pointer to the string
-    call string_length       ; Get string length
-    mov r8, rax              ; Move length to r8
-    sub rsp, 40              ; Align stack for WriteConsoleA
-    xor r9, r9               ; No OVERLAPPED structure
-    call WriteConsoleA       ; Call WriteConsoleA
-    add rsp, 40              ; Restore stack
+    mov rcx, rbx             
+    mov rdx, rdx             
+    call string_length       
+    mov r8, rax              
+    sub rsp, 40              
+    xor r9, r9              
+    call WriteConsoleA       
+    add rsp, 40              
     ret
 
 string_length:
     ; Calculate the length of a null-terminated string
-    xor rax, rax             ; Reset counter
+    xor rax, rax             
 next_char:
-    cmp byte [rdx + rax], 0  ; Check for null terminator
-    je done                  ; Jump if end of string
-    inc rax                  ; Increment counter
-    jmp next_char            ; Repeat
+    cmp byte [rdx + rax], 0  
+    je done                  
+    inc rax                  
+    jmp next_char            
 done:
     ret
