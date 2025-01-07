@@ -137,7 +137,7 @@ Use Curl to upload metadata to the Pump.fun IPFS API:
 
 curl -X POST https://pump.fun/api/ipfs \
     -H "Content-Type: application/json" \
-    -d '{"name":"Terry","symbol":"Terry","description":"The first token to be deployed in assembly language.","twitter":"https://twitter.com/MyToken","telegram":"https://t.me/MyTokenGroup","website":"https://mytoken.io"}'
+    -d '{"name":"Terry","symbol":"Terry","description":"The first token to be deployed in assembly language.","twitter":"https://x.com/terryd4vis",}'
 
 2. Submitting Transactions
 Use Curl to submit signed transactions to the Helius RPC:
