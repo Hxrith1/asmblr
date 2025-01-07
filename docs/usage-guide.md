@@ -30,34 +30,68 @@ Setting Up Dependencies
 1. Install Rust
 Visit the official Rust website and follow the installation instructions.
 After installation, verify by running:
-bash
-Copy code
+
 rustc --version
 
 2. Install GCC or MinGW
 Windows: Download and install MinGW-w64.
 Linux: Install GCC via your package manager:
-bash
-Copy code
+
 sudo apt-get install build-essential
 Verify installation:
-bash
-Copy code
+
 gcc --version
 
 3. Install NASM
 Download NASM from the official website.
 Verify installation:
-bash
-Copy code
+
 nasm -v
 
 4. Install Curl
 Windows: Download Curl from curl.se.
 Linux/MacOS: Install via your package manager:
-bash
-Copy code
+
 sudo apt-get install curl
+
+5. Configuring Rust Dependencies
+
+       1. Navigate to your Rust project directory:
+
+              cd rust_project_directory
+
+       2. Edit or create the Cargo.toml file in the directory to include the following dependencies:
+              
+              [package]
+              name = "asmblr_signer"
+              version = "0.1.0"
+              edition = "2021"
+
+              [dependencies]
+              solana-sdk = "1.14.10"  
+              bs58 = "0.4"           
+              bincode = "1.3"        
+
+       3. Run the following command to download and set up the dependencies:
+
+              cargo build
+
+       4. Verify the setup by ensuring no dependency-related errors occur during the build.
+
+             #### Compiling the Scripts
+
+              **Update the Rust Script section to reference the `Cargo.toml`:**
+
+ 
+ 
+ Compile the Rust Script (lib.rs)
+
+To build the Rust script into a dynamic library:
+
+Ensure that your `Cargo.toml` file includes the required dependencies (see "Setting Up Dependencies").
+
+ Navigate to the Rust script directory:
+
 
 Compiling the Scripts
 1. Compile the Assembly Script
@@ -80,7 +114,6 @@ Build the Rust script into a DLL:
 
        cargo build --release --target x86_64-pc-windows-gnu
 After building, copy the solana_sdk_wrapper.dll from target/release into the directory with signer.c.
-
 
 Running the Scripts
 1. Running the Assembly Script
